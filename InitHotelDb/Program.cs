@@ -28,8 +28,9 @@ namespace InitHotelDb
                     new Floor { Number = 2, Description = "Standart floor" },
                     new Floor { Number = 3, Description = "Luxurious floor" }
                 );
+                _ctx.SaveChanges();
 
-                var apartIds = 1;
+                //var apartIds = 1;
                 var apartmentsName = new[] { "Family Standart", "Single Standart", "Studio Double", "DBL Standart", "Twin Standart", "Superior Double", "Junior Suite(with min-kitchen)" };
                 var apartGenerator = new Faker<Apartment>()
                                         .StrictMode(false)
@@ -43,7 +44,12 @@ namespace InitHotelDb
                                         .RuleFor(a => a.ConvenienceTypeId, f => f.Random.Number(1, 3))
                                         .RuleFor(a => a.RoomTypeId, f => f.Random.Number(1, 3))
                                         .RuleFor(a => a.FloorId, f => f.Random.Number(2, 3));
+                var data = apartGenerator.Generate(20);
+
+                _ctx.AddRange(data);
+                _ctx.SaveChanges();
                 _ctx.AddRange(apartGenerator.Generate(200000).ToArray());
+                _ctx.SaveChanges();
                 Console.WriteLine("Bingo1!");
                 //apartIds = 1;
                 //var imageId = 1;
@@ -51,8 +57,8 @@ namespace InitHotelDb
                                         .StrictMode(false)
                                         .RuleFor(i => i.Name, f => f.Lorem.Sentence())
                                         //.RuleFor(i => i.Id, f => imageId++)
-                                        .RuleFor(i => i.AppartmentId, apartIds%3 == 0 ? ++apartIds : apartIds);
-                _ctx.ApartmentImages.AddRange(imageGenerator.Generate(400000).ToArray());
+                                        .RuleFor(i => i.AppartmentId, f => f.Random.Number(1, 200000));
+                _ctx.ApartmentImages.AddRange(imageGenerator.Generate(600000).ToArray());
                 Console.WriteLine("Bingo2!");
                 _ctx.SaveChanges();
             }

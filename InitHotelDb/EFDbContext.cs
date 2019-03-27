@@ -24,7 +24,7 @@ namespace WebSiteCore.DAL.Entities
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(local);Database=testHotel;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=(LocalDB)\v11.0;Database=testHotel;Trusted_Connection=True;");
         }
     }
 }
